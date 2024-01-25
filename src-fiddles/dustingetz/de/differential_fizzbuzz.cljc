@@ -1,4 +1,4 @@
-(ns dustingetz.differential-fizzbuzz
+(ns dustingetz.de.differential-fizzbuzz
   (:require [hyperfiddle.electric :as e]))
 
 (def !n (atom 10))

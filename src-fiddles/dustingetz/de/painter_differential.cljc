@@ -1,4 +1,4 @@
-(ns dustingetz.painter-differential
+(ns dustingetz.de.painter-differential
   (:require #?(:cljs goog.dom)
             [hyperfiddle.electric :as e]
             [hyperfiddle.electric-dom2 :as dom]
