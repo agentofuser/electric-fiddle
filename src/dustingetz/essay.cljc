@@ -6,22 +6,24 @@
             [hyperfiddle :as hf]
             [hyperfiddle.electric :as e]
             [hyperfiddle.electric-dom2 :as dom]
-            [hyperfiddle.history :as history]))
+            [hyperfiddle.router :as r]))
 
 (def essays
-  {'electric-y-combinator "src-fiddles/dustingetz/electric_y_combinator.md"
-   'hfql-intro "src-fiddles/dustingetz/hfql_intro.md"
-   'hfql-teeshirt-orders "src-fiddles/dustingetz/hfql_teeshirt_orders.md"})
+  {'electric-y-combinator "src/dustingetz/electric_y_combinator.md"
+   'hfql-intro "src/dustingetz/hfql_intro.md"
+   'hfql-teeshirt-orders "src/dustingetz/hfql_teeshirt_orders.md"})
 
-(e/def extensions 
+(e/def extensions
   {'fiddle Fiddle-fn
    'fiddle-ns Fiddle-ns})
 
-(e/defn Essay [& [?essay]]
+(e/defn Essay [& [?essay :as args]]
   #_(e/client (dom/div #_(dom/props {:class ""}))) ; fix css grid next
   (e/client
-    (let [essay-filename (get essays ?essay)]
+    #_(dom/div (dom/text (pr-str args) (pr-str r/route)))
+    (let [[?essay] (ffirst r/route)
+          essay-filename (get essays ?essay)]
       (cond
         (nil? ?essay) (binding [hf/pages essays] (Index.))
-        (nil? essay-filename) (dom/h1 (dom/text "Essay not found: " history/route))
+        (nil? essay-filename) (dom/h1 (dom/text "Essay not found: " r/route))
         () (Custom-markdown. extensions essay-filename)))))
