@@ -78,7 +78,7 @@
                                       (when-not prev "user-examples-nav-start")
                                       (when-not next "user-examples-nav-end")]})
         (when prev
-          (r/link [(list (::id prev))]
+          (r/link [(::id prev)]
             (dom/props {:class "user-examples-nav-prev"})
             (dom/text (str "< " (title prev)))))
         (dom/div (dom/props {:class "user-examples-select"})
@@ -93,9 +93,9 @@
                       (dom/props {:value (str id) :selected (= page id)})
                       (dom/text (str (inc (::order m)) ". " (title m))))))))
             (dom/on "change" (e/fn [^js e]
-                               (r/Navigate!. [(list (clojure.edn/read-string (.. e -target -value)))])))))
+                               (r/Navigate!. [(clojure.edn/read-string (.. e -target -value))])))))
         (when next
-          (r/link [(list (::id next))]
+          (r/link [(::id next)]
             (dom/props {:class "user-examples-nav-next"})
             (dom/text (str (title next) " >"))))))))
 
@@ -144,13 +144,13 @@
   ;; Demos used to be identified by their fully qualified name - e.g. `hello-fiddle.fiddles/Hello
   ;; They are now represented by an s-expression - e.g. `(electric-tutorial.demo-color/Color h s l)
   (if (and (map? link) (ident? (ffirst link)))
-    (do (r/Navigate!. [(list (ffirst link))])
+    (do (r/Navigate!. [#_(list) (ffirst link)])
         nil)
     link))
 
 (e/defn Tutorial []
   (e/client
-    (let [[?tutorial] (ffirst (RedirectLegacyLinks!. r/route))
+    (let [?tutorial (ffirst r/route #_(RedirectLegacyLinks!. r/route))
           ?tutorial   (or ?tutorial `TwoClocks)]
       (dom/h1 (dom/text "Electric Tutorial"))
       (binding [hf/pages fiddles]

@@ -20,8 +20,8 @@
 (e/defn Essay [& [?essay :as args]]
   #_(e/client (dom/div #_(dom/props {:class ""}))) ; fix css grid next
   (e/client
-    #_(dom/div (dom/text (pr-str args) (pr-str r/route)))
-    (let [[?essay] (ffirst r/route)
+    #_(dom/div (dom/text #_(pr-str args) (pr-str r/route)))
+    (let [?essay (ffirst r/route)
           essay-filename (get essays ?essay)]
       (cond
         (nil? ?essay) (binding [hf/pages essays] (Index.))
