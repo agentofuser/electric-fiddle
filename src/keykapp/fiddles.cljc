@@ -5,7 +5,6 @@
 (defn log-key-event [event]
   (let [code (.-code event)
         key (.-key event)
-        key (.-key event)
         is-repeat (.-repeat event)
         event-type (.-type event)]
     (cond
