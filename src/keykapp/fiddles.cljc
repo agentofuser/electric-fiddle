@@ -5,8 +5,9 @@
 (defn log-key-event [event]
   (let [code (.-code event)
         key (.-key event)
-        event-type (.-type event)
-        is-repeat (.-repeat event)]
+        key (.-key event)
+        is-repeat (.-repeat event)
+        event-type (.-type event)]
     (cond
       (= event-type "keydown") (println {:event-type event-type :code code :key key :is-repeat is-repeat})
       (= event-type "keyup") (println {:event-type event-type :code code :key key}))))
