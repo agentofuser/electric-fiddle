@@ -34,7 +34,7 @@
                 (dom/text keychange))))))
 
       (catch Pending e
-        (dom/style {:background-color "yellow"})))))
+        #_(dom/style {:background-color "yellow"})))))
 
 (e/def fiddles ; Entries for the dev index
   {`Keykapp Keykapp})
