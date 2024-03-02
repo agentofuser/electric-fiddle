@@ -14,22 +14,21 @@
         keychange {:event-type event-type :code code :key key :is-repeat is-repeat}]
     keychange))
 
-(e/defn log-keychange [event] (let [keychange (keychange-from event)]
+(e/defn log-keychange [event] (let [performance-timestamp (e/client (+ (.-timeOrigin js/performance) (. js/performance now)))
+                                    keychange (merge (keychange-from event) {:performance-timestamp performance-timestamp})]
                                 (println keychange)
                                 (e/server (swap! !keychanges #(cons keychange %)))))
 
 (e/defn Keykapp []
   (e/client
     (dom/h1 (dom/text "Hello from my fiddle."))
-       ;; Keydown event listener
     (dom/on "keydown" log-keychange)
-      ;; Keyup event listener
     (dom/on "keyup" log-keychange)
 
     (try
       (dom/ul
         (e/server
-          (e/for-by identity [keychange (reverse (take 9 keychanges))] ; chat renders bottom up
+          (e/for-by identity [keychange (reverse (take 9 keychanges))]
             (e/client
               (dom/li
                 (dom/text keychange))))))
